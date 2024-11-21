@@ -1,0 +1,64 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="project-container">
+        <h3>Project manager</h3>
+
+        <label for="projectName">Project Name:</label>
+        <input id="projectName" formControlName="projectName" />
+        @if (form.get('projectName')?.invalid && form.get('projectName')?.touched) {
+        <div style="color: red">Project Name is required.</div>
+        }
+
+        <label for="projectDescription">Project Description:</label>
+        <textarea id="projectDescription" formControlName="projectDescription"></textarea>
+        <div class="project-container" formArrayName="teamMembers">
+            <h3>Team Members</h3>
+            <button class="btn" type="button" (click)="addTeamMember()">Add Team Member</button>
+            <div class="project-members">
+                @for (member of teamMembers.controls; track $index) {
+            <div class="project-member" [formGroupName]="$index">
+                <div class="project-container">
+                    <label for="name-{{$index}}">Name:</label>
+                    <input id="name-{{$index}}" formControlName="name" />
+                    @if (member.get('name')?.invalid && member.get('name')?.touched) {
+                    <div style="color: red">
+                        Name is required.
+                    </div>
+                    }
+                </div>
+    
+                <div class="project-container">
+                    <label for="role-{{$index}}">Role:</label>
+                    <select id="role-{{$index}}" formControlName="role">
+                        <option value="" selected disabled>Choose role</option>
+                        <option value="Developer">Developer</option>
+                        <option value="Designer">Designer</option>
+                        <option value="Tester">Tester</option>
+                    </select>
+                    @if (member.get('role')?.invalid && member.get('role')?.touched) {
+                    <div style="color: red">
+                        Please select a valid role.
+                    </div>
+                    }
+                </div>
+    
+                <div>
+                    <label for="availability-{{$index}}">Available:</label>
+                    <input type="checkbox" id="availability-{{$index}}" formControlName="availability" />
+                </div>
+    
+                <button type="button" (click)="removeTeamMember($index)">Remove</button>
+            </div>
+                }
+            </div>
+        </div>
+    
+        <button class="btn" type="submit">Submit</button>
+        @if (submittedData) {
+            <h3>Form Data (JSON):</h3>
+<pre>{{ submittedData | json }}</pre>
+        }
+    </div>
+
+
+
+</form>
