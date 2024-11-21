@@ -20,6 +20,12 @@ get teamMembers(): FormArray {
   return this.form.get('teamMembers') as FormArray;
 }
 
+
+get buttonContent() : string {
+  return this.teamMembers.length === 0 ? 'add team member' : 'add next member'
+}
+
+
 addTeamMember() {
   const teamMember = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -41,6 +47,7 @@ onSubmit() {
   }
   this.submittedData = this.form.value
   console.log(this.submittedData);
+  console.log(this.form);
 }
 
 }

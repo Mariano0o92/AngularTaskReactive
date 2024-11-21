@@ -12,7 +12,7 @@
         <textarea id="projectDescription" formControlName="projectDescription"></textarea>
         <div class="project-container" formArrayName="teamMembers">
             <h3>Team Members</h3>
-            <button class="btn" type="button" (click)="addTeamMember()">Add Team Member</button>
+            <button class="btn" type="button" (click)="addTeamMember()">{{buttonContent}}</button>
             <div class="project-members">
                 @for (member of teamMembers.controls; track $index) {
             <div class="project-member" [formGroupName]="$index">
